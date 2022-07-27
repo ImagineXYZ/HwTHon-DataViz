@@ -1,0 +1,64 @@
+<html>
+   <head> 
+
+      <meta name="viewport" content="width=device-width, initial-scale=1"> 
+	
+   	<title>Mapa estático</title>
+   
+      <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"> 
+      <script type="text/javascript" src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"></script> 
+   
+      <style id="compiled-css" type="text/css">
+         html, body {
+            height: 100%;
+            margin: 0;
+         }
+         .leaflet-container {
+            height: 90vh;
+            width: 100vw;
+            max-width: 100%;
+            max-height: 100%;
+         }
+      </style> 
+   </head> 
+   <body> 
+
+      <div id="map" style="width: 100vw; height: 90vh;"></div>
+
+      <button id="button"> Agregar punto </button>  
+
+      
+      <script type="text/javascript">
+
+         // Declaramos el mapa y adonde queremos que se ubique
+        var map = L.map('map').setView([9.948917, -84.053428], 10);
+     
+         // Se le define los "colores" del mapa
+        var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+           maxZoom: 19
+        }).addTo(map);
+         
+        // Declaramos y agregamos una línea inicial 
+         var myPolyline = L.polyline([
+            [9.958917, -84.153428],
+            [9.948917, -84.053428]
+         ]).addTo(map).bindPopup("popup").openPopup();
+         
+         // Declaramos un contador de variable en 1
+         var count = 1;
+
+         // Escuchamos cuando se presiona el botón para agregar un punto
+         document.getElementById("button").addEventListener("click", function (event) {
+            event.preventDefault();
+
+            // Le agregamos un punto nuevo aleatorio
+            myPolyline.addLatLng([
+               9.94 - (count + Math.random()) * 0.01,
+               -83.95 + (count + Math.random()) * 0.01
+            ]);
+            count += 1;
+         });
+
+   </script> 
+   </body>
+</html>
